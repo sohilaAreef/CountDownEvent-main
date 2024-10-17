@@ -1,7 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../pages/EventScreen.dart';
 import '../pages/NotesViewBody.dart';
@@ -15,31 +14,20 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int selectedIdx = 1;
-  int changeIdx = 0;
+  int selectedIdx=1;
+  int changeIdx=0;
 
   @override
-  void initState() {
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
+  void initState(){
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed){
+      if(!isAllowed){
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
     super.initState();
-  }
+  
 
-  Future<void> _logout(BuildContext context) async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      // إعادة توجيه المستخدم إلى شاشة تسجيل الدخول
-      Navigator.pushReplacementNamed(context, '/login'); // تأكد من تعديل المسار حسب الشاشة المناسبة
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Logout failed: ${e.toString()}')),
-      );
-    }
   }
-
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
@@ -47,7 +35,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
       const AddWidget(),
       const NotesViewBody(),
     ];
-
     return Scaffold(
       body: screens[changeIdx],
       bottomNavigationBar: CurvedNavigationBar(
@@ -58,15 +45,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
         index: 1,
         onTap: (value) {
           setState(() {
-            if (value == 1) {
+            if(value==1){
+              selectedIdx=value;
               showModalBottomSheet(
-                context: context,
-                builder: (context) => const AddWidget(),
-              );
-            } else {
-              changeIdx = value;
+                  context: context, builder: (context) => const AddWidget());
+            }
+            else {
+              selectedIdx = value;
+              changeIdx=value;
             }
           });
+
         },
         items: [
           _buildNavIcons(Icons.event, "Events", selectedIdx == 0),
@@ -74,16 +63,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           _buildNavIcons(Icons.checklist, "Todo", selectedIdx == 2),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _logout(context); // استدعاء دالة تسجيل الخروج عند الضغط على الزر
-        },
-        child: const Icon(Icons.logout), // أيقونة تسجيل الخروج
-        backgroundColor: Colors.red, // يمكنك تغيير اللون كما ترغب
-      ),
-    );
-  }
+    );  }
 }
+
 
 Widget _buildNavIcons(IconData icon, String label, bool isSelected) {
   Color c = Colors.grey[400]!;

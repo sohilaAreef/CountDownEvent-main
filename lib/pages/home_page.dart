@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 
 import '../Customs/MyAppBar.dart';
 import '../widgets/calendar_widget.dart';
+import '../pages/event_editing_page.dart'; // تأكد من استيراد الصفحة
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -51,8 +52,23 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-        child: CalendarWidget(), // Your calendar widget
+        child: CalendarWidget(), // عرض الروزنامة
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.cyan,
+        onPressed: () {
+          // الانتقال إلى صفحة تعديل الأحداث عند الضغط على الزر
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => EventEditingPage()),
+          );
+        },
+      ),
+
+
       // floatingActionButton: FloatingActionButton(
       //   child: Icon(
       //     Icons.add,

@@ -114,7 +114,6 @@ class LoginScreen extends StatelessWidget {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      // عند نجاح تسجيل الدخول، الانتقال إلى شاشة BottomNavBar
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => BottomNavBar()),
@@ -142,7 +141,7 @@ class LoginScreen extends StatelessWidget {
 
       UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
 
-      // عند نجاح تسجيل الدخول باستخدام Google، الانتقال إلى BottomNavBar
+      
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => BottomNavBar()),

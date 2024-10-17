@@ -1,8 +1,7 @@
 import 'package:countdown_event/pages/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // تأكد من استيراد Firebase Auth
-
-import '../pages/home_page.dart';// استيراد صفحة تسجيل الدخول
+import 'package:firebase_auth/firebase_auth.dart'; 
+import '../pages/home_page.dart';
 
 PreferredSizeWidget getAppBar(
     {required BuildContext context, required String title, TabBar? tabBar}) {
@@ -11,10 +10,10 @@ PreferredSizeWidget getAppBar(
   Future<void> _logout() async {
     try {
       await FirebaseAuth.instance.signOut();
-      // إعادة توجيه المستخدم إلى شاشة تسجيل الدخول
+      
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>  LoginScreen()), // تأكد من تعديل المسار حسب الشاشة المناسبة
+        MaterialPageRoute(builder: (context) =>  LoginScreen()), 
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
